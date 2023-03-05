@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Neoxim.Platform.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.#ctor(Neoxim.Platform.Core.Services.ITenantService)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="tenantService"></param>
+        </member>
+    </members>
+</doc>

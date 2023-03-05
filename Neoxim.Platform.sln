@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neoxim.Platform.Api", "Neoxim.Platform.Api\Neoxim.Platform.Api.csproj", "{0891E5A4-E914-4B67-B7FA-0A5A811542FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neoxim.Platform.Core", "Neoxim.Platform.Core\Neoxim.Platform.Core.csproj", "{D23AD395-FBE3-4D2D-AAF1-C521B1411BCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neoxim.Platform.SharedKernel", "Neoxim.Platform.SharedKernel\Neoxim.Platform.SharedKernel.csproj", "{A7D55FD2-58A3-4344-B54E-151D67D32875}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neoxim.Platform.Tests", "Neoxim.Platform.Tests\Neoxim.Platform.Tests.csproj", "{94D9055A-D2AD-4359-B5AA-7D4321458685}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neoxim.Platform.Infrastructure", "Neoxim.Platform.Infrastructure\Neoxim.Platform.Infrastructure.csproj", "{8B723F53-0159-47B0-9C87-44DD380C6D33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0891E5A4-E914-4B67-B7FA-0A5A811542FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0891E5A4-E914-4B67-B7FA-0A5A811542FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0891E5A4-E914-4B67-B7FA-0A5A811542FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0891E5A4-E914-4B67-B7FA-0A5A811542FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D23AD395-FBE3-4D2D-AAF1-C521B1411BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23AD395-FBE3-4D2D-AAF1-C521B1411BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23AD395-FBE3-4D2D-AAF1-C521B1411BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23AD395-FBE3-4D2D-AAF1-C521B1411BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D55FD2-58A3-4344-B54E-151D67D32875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D55FD2-58A3-4344-B54E-151D67D32875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D55FD2-58A3-4344-B54E-151D67D32875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D55FD2-58A3-4344-B54E-151D67D32875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D9055A-D2AD-4359-B5AA-7D4321458685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D9055A-D2AD-4359-B5AA-7D4321458685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D9055A-D2AD-4359-B5AA-7D4321458685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D9055A-D2AD-4359-B5AA-7D4321458685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B723F53-0159-47B0-9C87-44DD380C6D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B723F53-0159-47B0-9C87-44DD380C6D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B723F53-0159-47B0-9C87-44DD380C6D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B723F53-0159-47B0-9C87-44DD380C6D33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
