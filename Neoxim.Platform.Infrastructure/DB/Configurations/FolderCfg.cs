@@ -25,6 +25,7 @@ namespace Neoxim.Platform.Infrastructure.DB.Configurations
             builder.HasMany(x => x.Childs).WithOne(x => x.Parent).HasForeignKey("parent_id").IsRequired(false);
 
             builder.HasMany(x => x.Documents).WithOne(x => x.Folder).HasForeignKey("folder_id");
+            builder.HasMany(x => x.FoldersInClaims).WithOne(x => x.Folder).HasForeignKey("folder_id");
         }
     }
 }

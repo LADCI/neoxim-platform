@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi.Models;
 using Neoxim.Platform.Api.Helpers;
@@ -8,7 +9,9 @@ using Neoxim.Platform.Infrastructure.DI;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddAuthorization(options =>
 {
@@ -21,6 +24,7 @@ builder.Services
        .Core()
        .Infrastructure(builder.Configuration)
        .AddScoped<IClaimsTransformation, AuthClaimsTransformationHelper>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -20,6 +20,8 @@ namespace Neoxim.Platform.Infrastructure.DB.Configurations
 
             builder.OwnsOne(x => x.Name, GetUserNameOwnedNavigationBuilder());
             builder.OwnsOne(x => x.Contact, GetContactOwnedNavigationBuilder());
+
+            builder.HasMany(x => x.UsersInClaims).WithOne(x => x.User).HasForeignKey("user_id");
         }
     }
 }

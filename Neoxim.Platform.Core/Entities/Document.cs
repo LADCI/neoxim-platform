@@ -28,7 +28,7 @@ namespace Neoxim.Platform.Core.Entities
                 Project = project
             };
 
-            document.SetTitle(title);
+            document.SetName(title);
             document.SetDescription(description);
             document.SetUrl(url);
             document.SetFolder(folder);
@@ -39,10 +39,10 @@ namespace Neoxim.Platform.Core.Entities
 
         public DocumentTypeEnum Type { get; protected set; }
 
-        public string Title { get; protected set; }
-        private void SetTitle(string title)
+        public string Name { get; protected set; }
+        private void SetName(string name)
         {
-            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
         public string Description { get; protected set; }
         private void SetDescription(string description)

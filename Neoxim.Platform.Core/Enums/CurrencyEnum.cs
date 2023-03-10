@@ -4,6 +4,6 @@ namespace Neoxim.Platform.Core.Enums
     {
         XOF,
         EUR,
-        DOLLAR
+        USD
     }
 }

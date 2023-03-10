@@ -4,11 +4,53 @@
         <name>Neoxim.Platform.Api</name>
     </assembly>
     <members>
+        <member name="T:Neoxim.Platform.Api.Controllers.TenantsController">
+            <summary>
+            Tenant Controllers
+            </summary>
+        </member>
         <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.#ctor(Neoxim.Platform.Core.Services.ITenantService)">
             <summary>
             Ctor.
             </summary>
             <param name="tenantService"></param>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all tenants
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.GetAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Get tenant by id
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.PostAsync(Neoxim.Platform.Core.Models.CreateTenantModel)">
+            <summary>
+            Create new tenant
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.PatchAsync(System.Guid,Neoxim.Platform.Core.Models.UpdateTenantModel)">
+            <summary>
+            Update tenant information
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.TenantsController.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a tenant
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

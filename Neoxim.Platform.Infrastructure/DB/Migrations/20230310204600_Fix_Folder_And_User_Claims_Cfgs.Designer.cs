@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Neoxim.Platform.Infrastructure.DB.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Neoxim.Platform.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230310204600_Fix_Folder_And_User_Claims_Cfgs")]
+    partial class Fix_Folder_And_User_Claims_Cfgs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,12 +359,6 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("name");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("status");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
@@ -396,16 +393,15 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("name");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("tenant_id");
+                    b.Property<Guid>("tenant_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex(new[] { "Name", "TenantId" }, "IX_tenant_claims_name_tenant_id")
+                    b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("tenant_id");
 
                     b.ToTable("tenant_claims", "nxm");
                 });
@@ -665,10 +661,9 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                 {
                     b.HasOne("Neoxim.Platform.Core.Entities.Tenant", "Tenant")
                         .WithMany("Claims")
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("tenant_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("tenant_id");
+                        .IsRequired();
 
                     b.Navigation("Tenant");
                 });

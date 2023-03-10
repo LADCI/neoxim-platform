@@ -10,13 +10,12 @@ namespace Neoxim.Platform.Core.Entities
         {
         }
 
-        public static Subscription CreateNew(Tenant tenant, Amount unitAmount, DateTimeOffset startDate)
+        public static Subscription CreateNew(Amount unitAmount, DateTimeOffset startDate)
         {
             var subscription = new Subscription();
 
             subscription.SetUnitAmount(unitAmount);
             subscription.SetStartDate(startDate);
-            subscription.SetTenant(tenant);
 
             return subscription;
         }

@@ -21,5 +21,6 @@ namespace Neoxim.Platform.Core.Entities
         public ICollection<Folder> Childs { get; protected set; }
 
         public ICollection<Document> Documents { get; protected set; }
+        public ICollection<FolderInClaim> FoldersInClaims { get; protected set; }
     }
 }

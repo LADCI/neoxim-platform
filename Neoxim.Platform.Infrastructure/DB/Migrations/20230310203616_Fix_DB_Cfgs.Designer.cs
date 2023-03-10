@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Neoxim.Platform.Infrastructure.DB.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Neoxim.Platform.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230310203616_Fix_DB_Cfgs")]
+    partial class Fix_DB_Cfgs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,6 +216,9 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("creation_date");
 
+                    b.Property<Guid>("FolderId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTimeOffset>("LastChangesDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_changes_date");
@@ -220,14 +226,11 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                     b.Property<Guid>("claim_id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("folder_id")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("claim_id");
+                    b.HasIndex("FolderId");
 
-                    b.HasIndex("folder_id");
+                    b.HasIndex("claim_id");
 
                     b.ToTable("folders_in_claims", "nxm");
                 });
@@ -356,12 +359,6 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("name");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("status");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
@@ -396,16 +393,15 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("name");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("tenant_id");
+                    b.Property<Guid>("tenant_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex(new[] { "Name", "TenantId" }, "IX_tenant_claims_name_tenant_id")
+                    b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("tenant_id");
 
                     b.ToTable("tenant_claims", "nxm");
                 });
@@ -450,17 +446,17 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_changes_date");
 
-                    b.Property<Guid>("claim_id")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("user_id")
+                    b.Property<Guid>("claim_id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("claim_id");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("user_id");
+                    b.HasIndex("claim_id");
 
                     b.ToTable("users_in_claims", "nxm");
                 });
@@ -533,15 +529,15 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
 
             modelBuilder.Entity("Neoxim.Platform.Core.Entities.FolderInClaim", b =>
                 {
-                    b.HasOne("Neoxim.Platform.Core.Entities.TenantClaim", "Claim")
-                        .WithMany("FoldersInClaims")
-                        .HasForeignKey("claim_id")
+                    b.HasOne("Neoxim.Platform.Core.Entities.Folder", "Folder")
+                        .WithMany()
+                        .HasForeignKey("FolderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Neoxim.Platform.Core.Entities.Folder", "Folder")
+                    b.HasOne("Neoxim.Platform.Core.Entities.TenantClaim", "Claim")
                         .WithMany("FoldersInClaims")
-                        .HasForeignKey("folder_id")
+                        .HasForeignKey("claim_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -665,10 +661,9 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                 {
                     b.HasOne("Neoxim.Platform.Core.Entities.Tenant", "Tenant")
                         .WithMany("Claims")
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("tenant_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("tenant_id");
+                        .IsRequired();
 
                     b.Navigation("Tenant");
                 });
@@ -754,15 +749,15 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
 
             modelBuilder.Entity("Neoxim.Platform.Core.Entities.UserInClaim", b =>
                 {
-                    b.HasOne("Neoxim.Platform.Core.Entities.TenantClaim", "Claim")
-                        .WithMany("UsersInClaims")
-                        .HasForeignKey("claim_id")
+                    b.HasOne("Neoxim.Platform.Core.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Neoxim.Platform.Core.Entities.User", "User")
+                    b.HasOne("Neoxim.Platform.Core.Entities.TenantClaim", "Claim")
                         .WithMany("UsersInClaims")
-                        .HasForeignKey("user_id")
+                        .HasForeignKey("claim_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -786,8 +781,6 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                     b.Navigation("Childs");
 
                     b.Navigation("Documents");
-
-                    b.Navigation("FoldersInClaims");
                 });
 
             modelBuilder.Entity("Neoxim.Platform.Core.Entities.Project", b =>
@@ -814,11 +807,6 @@ namespace Neoxim.Platform.Infrastructure.DB.Migrations
                 {
                     b.Navigation("FoldersInClaims");
 
-                    b.Navigation("UsersInClaims");
-                });
-
-            modelBuilder.Entity("Neoxim.Platform.Core.Entities.User", b =>
-                {
                     b.Navigation("UsersInClaims");
                 });
 #pragma warning restore 612, 618

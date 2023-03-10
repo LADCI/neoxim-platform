@@ -18,7 +18,7 @@ namespace Neoxim.Platform.Infrastructure.DB.Configurations
             //...
             builder.OwnsOne(x => x.UnitAmount, GetAmountOwnedNavigationBuilder());
 
-            builder.Property(x => x.EndDate).HasColumnName("start_date").IsRequired();
+            builder.Property(x => x.StartDate).HasColumnName("start_date").IsRequired();
             builder.Property(x => x.EndDate).HasColumnName("end_date").IsRequired(false);
         }
     }

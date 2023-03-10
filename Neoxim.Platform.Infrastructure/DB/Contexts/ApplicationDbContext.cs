@@ -20,10 +20,13 @@ namespace Neoxim.Platform.Infrastructure.DB.Contexts
             modelBuilder.ApplyConfiguration(new DocumentIssueCfg());
             modelBuilder.ApplyConfiguration(new DocumentIssueCommentCfg());
             modelBuilder.ApplyConfiguration(new FolderCfg());
+            modelBuilder.ApplyConfiguration(new FolderInClaimCfg());
             modelBuilder.ApplyConfiguration(new ProjectCfg());
             modelBuilder.ApplyConfiguration(new SubscriptionCfg());
             modelBuilder.ApplyConfiguration(new TenantCfg());
+            modelBuilder.ApplyConfiguration(new TenantClaimCfg());
             modelBuilder.ApplyConfiguration(new UserCfg());
+            modelBuilder.ApplyConfiguration(new UserInClaimCfg());
         }
     }
 }
