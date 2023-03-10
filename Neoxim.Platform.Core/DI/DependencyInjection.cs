@@ -15,7 +15,9 @@ namespace Neoxim.Platform.Core.DI
             // ...
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+
             services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<IFolderService, FolderService>();
 
             return services;
         }
