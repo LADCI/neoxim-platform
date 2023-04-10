@@ -36,7 +36,7 @@ namespace Neoxim.Platform.Infrastructure.DB.Repositories
         {
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            events?.ToList().ForEach(x => _mediator.Send(x));
+            events?.ToList().ForEach(x => _mediator.Publish(x));
         }
     }
 }

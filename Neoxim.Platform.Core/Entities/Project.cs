@@ -16,6 +16,7 @@ namespace Neoxim.Platform.Core.Entities
             Tenant tenant,
             string name,
             string description,
+            Amount amount,
             ProjectTypeEnum type,
             ProjectConstructionTypeEnum constructionType,
             ProjectContractTypeEnum contractType,
@@ -28,6 +29,7 @@ namespace Neoxim.Platform.Core.Entities
             project.SetTenant(tenant);
             project.SetName(name);
             project.SetDescription(description);
+            project.SetAmount(amount);
             project.SetType(type);
             project.SetConstructionType(constructionType);
             project.SetContractType(contractType);
@@ -77,8 +79,8 @@ namespace Neoxim.Platform.Core.Entities
         public DateTimeOffset StartDate { get; protected set; }
         public void SetStartDate(DateTimeOffset startDate)
         {
-            if(startDate >= EndDate)
-                throw new ArgumentException("Start date must be less than start date.");
+            // if(startDate >= EndDate)
+            //     throw new ArgumentException("Start date must be less than start date.");
 
             StartDate = startDate;
         }

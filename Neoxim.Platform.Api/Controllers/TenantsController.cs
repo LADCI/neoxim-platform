@@ -74,9 +74,9 @@ namespace Neoxim.Platform.Api.Controllers
                 var result = await _tenantService.CreateAsync(model.Name, new Contact(model.Contact.Email, model.Contact.Phone, model.Contact.Address), model.SubscriptionUnitAmount);
                 return Ok(result);
             }
-            catch(ObjectNotFoundException)
+            catch(ObjectNotFoundException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Error);
             }
         }
 

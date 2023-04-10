@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Neoxim.Platform.Core.Services;
 using Neoxim.Platform.Core.Services.Impl;
@@ -18,6 +14,7 @@ namespace Neoxim.Platform.Core.DI
 
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IFolderService, FolderService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             return services;
         }

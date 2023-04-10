@@ -27,12 +27,12 @@ namespace Neoxim.Platform.Core.Services.Impl
                 i => i.Childs
             );
 
-            var models = folders.Select(x => new FolderModel(x));
+            var models = folders.OrderBy(x => x.Name).Select(x => new FolderModel(x));
 
             if(asTree)
             {
                 var topLevelModels = models.Where(x => x.ParentId == null).ToList();
-                topLevelModels.SelectMany(x => x.Childs).ToList().ForEach(x =>
+                topLevelModels.SelectMany(x => x.Childs.OrderBy(y => y.Name)).ToList().ForEach(x =>
                 {
                     LoadChildren(x, models);
                 });
@@ -41,7 +41,7 @@ namespace Neoxim.Platform.Core.Services.Impl
                 {
                     if (!x.Childs.Any())
                     {
-                        var children = models.Where(y => y.ParentId == x.Id).ToList();
+                        var children = models.Where(y => y.ParentId == x.Id).OrderBy(z => z.Name).ToList();
                         children.ForEach(y => {
                             if(cpt < maxLevel)
                             {

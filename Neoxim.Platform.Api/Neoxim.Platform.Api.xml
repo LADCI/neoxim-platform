@@ -12,6 +12,50 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.ProjectsController.#ctor(Neoxim.Platform.Core.Services.IProjectService)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="projectService"></param>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.ProjectsController.GetAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Get project
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.ProjectsController.GetProjectsByTenantAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Get projects for a tenant
+            </summary>
+            <param name="tenantId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.ProjectsController.PostAsync(Neoxim.Platform.Core.Models.CreateProjectModel)">
+            <summary>
+            Create new project
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.ProjectsController.PatchAsync(System.Guid,Neoxim.Platform.Core.Models.UpdateProjectModel)">
+            <summary>
+            Update project information
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.ProjectsController.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a project
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Neoxim.Platform.Api.Controllers.TenantsController">
             <summary>
             Tenant Controllers

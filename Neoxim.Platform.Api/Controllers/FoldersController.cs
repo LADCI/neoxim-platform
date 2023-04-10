@@ -32,9 +32,9 @@ namespace Neoxim.Platform.Api.Controllers
                 var result = await _folderService.GetAsync(id, cancellationToken);
                 return Ok(result);
             }
-            catch(ObjectNotFoundException)
+            catch(ObjectNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Error);
             }
         }
 
