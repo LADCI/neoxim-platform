@@ -5,12 +5,19 @@ using Neoxim.Platform.SharedKernel.Exceptions;
 
 namespace Neoxim.Platform.Api.Controllers
 {
+    /// <summary>
+    /// Folders
+    /// </summary>
     [ApiController]
     [Route("api/folders")]
     public class FoldersController : BaseApiController
     {
         private readonly IFolderService _folderService;
 
+        /// <summary>
+        /// Ctors.
+        /// </summary>
+        /// <param name="folderService"></param>
         public FoldersController(IFolderService folderService)
         {
             _folderService = folderService;
@@ -38,6 +45,13 @@ namespace Neoxim.Platform.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Get folders by tenant
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="asTree"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("tenant/{tenantId}", Name = "GetFoldersByTenantAsync")]
         [ProducesResponseType(typeof(IEnumerable<FolderModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFoldersForTenantAsync(Guid tenantId, [FromQuery] bool asTree, CancellationToken cancellationToken)
@@ -46,6 +60,11 @@ namespace Neoxim.Platform.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Create new folder
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("", Name = "PostFolderAsync")]
         [ProducesResponseType(typeof(FolderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> PostAsync([FromBody] CreateFolderModel model)

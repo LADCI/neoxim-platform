@@ -5,6 +5,9 @@ using Neoxim.Platform.SharedKernel.Exceptions;
 
 namespace Neoxim.Platform.Api.Controllers
 {
+    /// <summary>
+    /// Users
+    /// </summary>
     [ApiController]
     [Route("api/projects")]
     public class ProjectsController : BaseApiController

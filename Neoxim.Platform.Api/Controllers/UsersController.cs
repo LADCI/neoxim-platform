@@ -7,16 +7,30 @@ using Neoxim.Platform.SharedKernel.Exceptions;
 
 namespace Neoxim.Platform.Api.Controllers
 {
+    /// <summary>
+    /// Users
+    /// </summary>
     [ApiController]
     [Route("api/users")]
     public class UsersController : BaseApiController
     {
         private readonly IUserService _userService;
+
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="userService"></param>
         public UsersController(IUserService userService)
         {
             _userService = userService;
         }
 
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetUserAsync")]
         [ProducesResponseType(typeof(UserModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken)
@@ -32,6 +46,12 @@ namespace Neoxim.Platform.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Get users by tenant
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("tenant/{tenantId}", Name = "GetUsersByTenantAsync")]
         [ProducesResponseType(typeof(IEnumerable<UserModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsersByTenantAsync(Guid tenantId, CancellationToken cancellationToken)
@@ -41,7 +61,7 @@ namespace Neoxim.Platform.Api.Controllers
         }
 
         /// <summary>
-        /// Create new project
+        /// Create new user
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
