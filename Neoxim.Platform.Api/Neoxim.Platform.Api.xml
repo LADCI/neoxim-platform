@@ -4,6 +4,11 @@
         <name>Neoxim.Platform.Api</name>
     </assembly>
     <members>
+        <member name="T:Neoxim.Platform.Api.Controllers.BaseApiController">
+            <summary>
+            Ctor.
+            </summary>
+        </member>
         <member name="M:Neoxim.Platform.Api.Controllers.FoldersController.GetAsync(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get folder by id
@@ -102,6 +107,32 @@
             Delete a tenant
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.UsersController.PostAsync(Neoxim.Platform.Core.Models.CreateUserModel)">
+            <summary>
+            Create new project
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Neoxim.Platform.Api.Helpers.AuthClaimsTransformationHelper">
+            <summary>
+            Claim transformer
+            </summary>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Helpers.AuthClaimsTransformationHelper.#ctor(Neoxim.Platform.Core.Services.IUserService,Neoxim.Platform.Core.Services.ITenantService)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="userService"></param>
+            <param name="tenantService"></param>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Helpers.AuthClaimsTransformationHelper.TransformAsync(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Transform claims
+            </summary>
+            <param name="principal"></param>
             <returns></returns>
         </member>
     </members>

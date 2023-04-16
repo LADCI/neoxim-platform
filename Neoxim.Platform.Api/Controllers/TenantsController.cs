@@ -11,7 +11,7 @@ namespace Neoxim.Platform.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/tenants")]
-    public class TenantsController : ControllerBase
+    public class TenantsController : BaseApiController
     {
         private readonly ITenantService _tenantService;
 

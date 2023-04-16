@@ -7,7 +7,7 @@ namespace Neoxim.Platform.Api.Controllers
 {
     [ApiController]
     [Route("api/projects")]
-    public class ProjectsController : ControllerBase
+    public class ProjectsController : BaseApiController
     {
         private readonly IProjectService _projectService;
 

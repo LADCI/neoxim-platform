@@ -15,6 +15,7 @@ namespace Neoxim.Platform.Core.DI
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IFolderService, FolderService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

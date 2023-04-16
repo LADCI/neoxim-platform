@@ -7,7 +7,7 @@ namespace Neoxim.Platform.Api.Controllers
 {
     [ApiController]
     [Route("api/folders")]
-    public class FoldersController : ControllerBase
+    public class FoldersController : BaseApiController
     {
         private readonly IFolderService _folderService;
 
