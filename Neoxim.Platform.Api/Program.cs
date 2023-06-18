@@ -8,6 +8,7 @@ using Neoxim.Platform.Api.Helpers;
 using Neoxim.Platform.Core.AppSettings;
 using Neoxim.Platform.Core.DI;
 using Neoxim.Platform.Infrastructure.DI;
+using Neoxim.Platform.Infrastructure.Externals.Autodesk;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +67,28 @@ builder.Services
             cfg.IncludeXmlComments(filePath);
         });
 
+// Autodesk Forge
+builder.Services.AddSingleton(new APS(builder.Configuration.GetValue<string>("Externals:Autodesk:ClientId"), 
+                                            builder.Configuration.GetValue<string>("Externals:Autodesk:ClientSecret"), 
+                                            builder.Configuration.GetValue<string>("Externals:Autodesk:Bucket"))
+                                  );
+
+// CORS
+builder.Services.AddCors(Options => 
+    {
+        Options.AddPolicy("All", policy => 
+        {
+            var corsList = builder.Configuration.GetValue<string>("Cors:Domains")?.Split(';')?.ToList();
+            corsList?.ForEach(cors => 
+            {
+                policy.WithOrigins(cors);
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+            });
+        });
+    }
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -87,6 +110,8 @@ var app = builder.Build();
 app.ApplyEfMigrations();
 
 app.UseHttpsRedirection();
+
+app.UseCors("All");
 
 app.UseAuthorization();
 

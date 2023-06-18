@@ -2,10 +2,11 @@ namespace Neoxim.Platform.Core.Enums
 {
     public enum DocumentTypeEnum
     {
-        ICF,
+        IFC,
         PDF,
         EXCEL,
         WORD,
+        PPT,
         DWG,
         RVT,
         ARCH

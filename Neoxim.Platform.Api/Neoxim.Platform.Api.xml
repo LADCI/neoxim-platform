@@ -57,6 +57,49 @@
             <param name="documentId"></param>
             <returns></returns>
         </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.AutodeskGetAccessTokenAsync">
+            <summary>
+            APS - Get access token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.GetModelsAsync">
+            <summary>
+            APS - Get models
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Neoxim.Platform.Api.Controllers.Externals.AccessToken">
+            <summary>
+            Access Token
+            </summary>
+            <param name="access_token"></param>
+            <param name="expires_in"></param> <summary>
+            
+            </summary>
+            <param name="access_token"></param>
+            <param name="expires_in"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.Externals.AccessToken.#ctor(System.String,System.Int64)">
+            <summary>
+            Access Token
+            </summary>
+            <param name="access_token"></param>
+            <param name="expires_in"></param> <summary>
+            
+            </summary>
+            <param name="access_token"></param>
+            <param name="expires_in"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Neoxim.Platform.Api.Controllers.Externals.AccessToken.access_token">
+            <summary></summary>
+            <summary></summary>
+        </member>
+        <member name="P:Neoxim.Platform.Api.Controllers.Externals.AccessToken.expires_in">
+            <summary></summary>    /// <summary></summary>
+        </member>
         <member name="T:Neoxim.Platform.Api.Controllers.FoldersController">
             <summary>
             Folders
