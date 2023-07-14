@@ -14,11 +14,11 @@
             Documents
             </summary>
         </member>
-        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetAsync(System.Guid)">
+        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetAsync(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get document by id
             </summary>
-            <param name="documentId"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetDocumentsForTenantAsync(System.Guid)">
@@ -35,11 +35,12 @@
             <param name="folderId"></param>
             <returns></returns>
         </member>
-        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.PostAsync(System.Object)">
+        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.PostAsync(Neoxim.Platform.Core.Models.CreateDocumentModel,Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             Create new document
             </summary>
-            <param name="createDocumentModel"></param>
+            <param name="model"></param>
+            <param name="file"></param>
             <returns></returns>
         </member>
         <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.PutAsync(System.Guid,System.Object)">
@@ -68,6 +69,16 @@
             APS - Get models
             </summary>
             <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.GenerateBucketAsync(Neoxim.Platform.Api.Controllers.Externals.LoadDocumentModel)" -->
+        <member name="M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.#ctor(Neoxim.Platform.Core.Services.IDocumentService,Neoxim.Platform.Core.Infrastructure.IStorageService,Microsoft.Extensions.Caching.Memory.IMemoryCache,Neoxim.Platform.Infrastructure.Externals.Autodesk.APS)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="documentService"></param>
+            <param name="storageService"></param>
+            <param name="memoryCache"></param>
+            <param name="aps"></param>
         </member>
         <member name="T:Neoxim.Platform.Api.Controllers.Externals.AccessToken">
             <summary>

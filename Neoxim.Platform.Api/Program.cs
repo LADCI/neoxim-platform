@@ -7,6 +7,7 @@ using Neoxim.Platform.Api.Constants;
 using Neoxim.Platform.Api.Helpers;
 using Neoxim.Platform.Core.AppSettings;
 using Neoxim.Platform.Core.DI;
+using Neoxim.Platform.Core.Options;
 using Neoxim.Platform.Infrastructure.DI;
 using Neoxim.Platform.Infrastructure.Externals.Autodesk;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -18,6 +19,10 @@ builder.Services
     .AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
+// Cache
+builder.Services.AddMemoryCache();
+
+// Auth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -89,6 +94,11 @@ builder.Services.AddCors(Options =>
     }
 );
 
+// Options
+builder.Services.Configure<AzureStorageOptions>(builder.Configuration.GetSection("Externals:Azure:Storage"));
+builder.Services.Configure<ApsOptions>(builder.Configuration.GetSection("Externals:Autodesk"));
+
+// App
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

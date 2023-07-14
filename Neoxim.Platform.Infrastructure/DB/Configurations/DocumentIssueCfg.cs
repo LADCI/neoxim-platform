@@ -21,7 +21,7 @@ namespace Neoxim.Platform.Infrastructure.DB.Configurations
             //...
             builder.Property(x => x.Name).HasColumnName("name").HasMaxLength(256).IsRequired();
             builder.Property(x => x.Description).HasColumnName("description").HasColumnType("text").IsRequired();
-            builder.Property(x => x.SnapshotImage).HasColumnName("snapshot").IsRequired();
+            builder.Property(x => x.SnapshotImageUrl).HasColumnName("snapshot").IsRequired();
 
             builder.HasMany(x => x.Comments).WithOne(x => x.Issue).HasForeignKey("issue_id");
         }

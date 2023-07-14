@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Neoxim.Platform.Api.Constants;
+using Neoxim.Platform.Core.Infrastructure;
+using Neoxim.Platform.Core.Models;
+using Neoxim.Platform.Core.Services;
 
 namespace Neoxim.Platform.Api.Controllers
 {
@@ -11,15 +14,27 @@ namespace Neoxim.Platform.Api.Controllers
     [Route("api/documents")]
     public class DocumentsController : BaseApiController
     {
+        private readonly IDocumentService _documentService;
+        private readonly IStorageService _storageService;
+
+        public DocumentsController(IDocumentService documentService, IStorageService storageService)
+        {
+            _documentService = documentService;
+            _storageService = storageService;
+        }
+
+
         /// <summary>
         /// Get document by id
         /// </summary>
-        /// <param name="documentId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{documentId}", Name = "GetDocumentAsync")]
-        public async Task<IActionResult> GetAsync(Guid documentId)
+        [HttpGet("{id}", Name = "GetDocumentAsync")]
+        public async Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            return Ok();
+            var document = await _documentService.GetAsync(id, cancellationToken);
+
+            return Ok(document);
         }
 
         /// <summary>
@@ -47,13 +62,25 @@ namespace Neoxim.Platform.Api.Controllers
         /// <summary>
         /// Create new document
         /// </summary>
-        /// <param name="createDocumentModel"></param>
+        /// <param name="model"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("", Name = "PostDocumentAsync")]
         [Authorize(Policy = ClaimsConstant.Type.UPLOAD)]
-        public async Task<IActionResult> PostAsync([FromBody] object createDocumentModel)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DocumentModel))]
+        public async Task<IActionResult> PostAsync([FromForm] CreateDocumentModel model, IFormFile file)
         {
-            return Ok();
+            var fs = file.OpenReadStream();
+
+            var media = await _documentService.CreateAsync( model.Type, model.Name, model.Description ?? file.FileName, model.TenantId, model.ProjectId, model.FolderId);
+
+            var url = await _storageService.UploadFileAsync(media.TenantId, media.Id, model.Type.ToString(), fs);
+
+            media.Url = url;
+
+            await _documentService.SetUrlAsync(media.Id, url);
+
+            return Ok(media);
         }
 
         /// <summary>

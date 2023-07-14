@@ -24,4 +24,6 @@ namespace Neoxim.Platform.Api.Controllers.Externals
         [FromForm(Name = "model-file")]
         public IFormFile File { get; set; }
     }
+
+    public record LoadDocumentModel(Guid documentId);
 }

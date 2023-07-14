@@ -9,7 +9,7 @@ namespace Neoxim.Platform.Core.Entities
             Comments = new List<DocumentIssueComment>();
         }
 
-        public static DocumentIssue CreateNew(Document document, string name, string description, byte[] image)
+        public static DocumentIssue CreateNew(Document document, string name, string description, string imageUrl)
         {
             var issue = new DocumentIssue
             {
@@ -18,7 +18,7 @@ namespace Neoxim.Platform.Core.Entities
 
             issue.SetName(name);
             issue.SetDescription(description);
-            issue.SetSnapshotImage(image);
+            issue.SetSnapshotImage(imageUrl);
 
             return issue;
         }
@@ -35,10 +35,10 @@ namespace Neoxim.Platform.Core.Entities
             Description = description ?? throw new ArgumentNullException(nameof(description));
         }
 
-        public byte[] SnapshotImage { get; set; }
-        private void SetSnapshotImage(byte[] image)
+        public string SnapshotImageUrl { get; set; }
+        private void SetSnapshotImage(string image)
         {
-            SnapshotImage = image;
+            SnapshotImageUrl = image;
         }
 
         public Document Document { get; set; }

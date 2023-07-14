@@ -14,7 +14,6 @@ namespace Neoxim.Platform.Core.Entities
         public static Document CreateNew(
             DocumentTypeEnum type,
             string title,
-            string url,
             string description,
             Tenant tenant,
             Project project,
@@ -30,7 +29,7 @@ namespace Neoxim.Platform.Core.Entities
 
             document.SetName(title);
             document.SetDescription(description);
-            document.SetUrl(url);
+            document.SetUrl("UNDEFINED");
             document.SetFolder(folder);
 
             return document;
@@ -51,7 +50,7 @@ namespace Neoxim.Platform.Core.Entities
         }
 
         public string Url { get; protected set; }
-        private void SetUrl(string url)
+        public void SetUrl(string url)
         {
             Url = url ?? throw new ArgumentNullException(nameof(url));
         }

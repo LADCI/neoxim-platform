@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Neoxim.Platform.Core.Infrastructure;
 using Neoxim.Platform.Infrastructure.DB.Contexts;
 using Neoxim.Platform.Infrastructure.DB.Repositories;
+using Neoxim.Platform.Infrastructure.Storages;
 using Neoxim.Platform.Infrastructure.Systems;
 
 namespace Neoxim.Platform.Infrastructure.DI
@@ -26,6 +27,7 @@ namespace Neoxim.Platform.Infrastructure.DI
             //services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ISystemClock, SystemClock>();
+            services.AddScoped<IStorageService, AzureBlogStorageService>();
 
             return services;
         }

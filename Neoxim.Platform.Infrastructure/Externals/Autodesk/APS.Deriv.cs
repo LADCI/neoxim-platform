@@ -23,7 +23,7 @@ namespace Neoxim.Platform.Infrastructure.Externals.Autodesk
             var api = new DerivativesApi();
             api.Configuration.AccessToken = token.AccessToken;
             var formats = new List<JobPayloadItem> {
-                new JobPayloadItem (JobPayloadItem.TypeEnum.Svf, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
+                new JobPayloadItem (JobPayloadItem.TypeEnum.Svf2, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
                 //new JobPayloadItem (JobPayloadItem.TypeEnum.Dwg, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
                 //new JobPayloadItem (JobPayloadItem.TypeEnum.Thumbnail, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
                 //new JobPayloadItem (JobPayloadItem.TypeEnum.Ifc, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._3d })
