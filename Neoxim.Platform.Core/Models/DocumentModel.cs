@@ -15,6 +15,7 @@ namespace Neoxim.Platform.Core.Models
 
             Id = entity.Id;
             Name = entity.Name;
+            Type = entity.Type;
             Description = entity.Description;
             Url = entity.Url;
             TenantId = tenantId;

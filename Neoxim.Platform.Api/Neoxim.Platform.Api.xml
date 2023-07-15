@@ -14,6 +14,8 @@
             Documents
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:Neoxim.Platform.Api.Controllers.DocumentsController.DownloadBimDocumentAsync(Neoxim.Platform.Api.Controllers.DownloadDocumentModel)" -->
+        <!-- Badly formed XML comment ignored for member "M:Neoxim.Platform.Api.Controllers.DocumentsController.DownloadClassicDocumentAsync(Neoxim.Platform.Api.Controllers.DownloadDocumentModel)" -->
         <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetAsync(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get document by id
@@ -21,18 +23,28 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetDocumentsForTenantAsync(System.Guid)">
+        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetDocumentsForTenantAsync(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get documents by tenant
             </summary>
             <param name="tenantId"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetDocumentsForFolderAsync(System.Guid)">
+        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetDocumentsForProjectAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Get documents by folder identifier
+            </summary>
+            <param name="projectId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.GetDocumentsForFolderAsync(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get documents by folder identifier
             </summary>
             <param name="folderId"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.PostAsync(Neoxim.Platform.Core.Models.CreateDocumentModel,Microsoft.AspNetCore.Http.IFormFile)">
@@ -41,6 +53,12 @@
             </summary>
             <param name="model"></param>
             <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.DownloadDocumentAsync(Neoxim.Platform.Core.Enums.DocumentTypeEnum,Neoxim.Platform.Api.Controllers.DownloadDocumentModel)">
+            <summary>
+            Download document for a given type
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Neoxim.Platform.Api.Controllers.DocumentsController.PutAsync(System.Guid,System.Object)">
@@ -70,7 +88,14 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.GenerateBucketAsync(Neoxim.Platform.Api.Controllers.Externals.LoadDocumentModel)" -->
+        <member name="M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.GetModelStatus(System.String)">
+            <summary>
+            Get document translation status
+            </summary>
+            <param name="urn"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.UploadAndTranslateModelAsync(Microsoft.AspNetCore.Http.IFormFile)" -->
         <member name="M:Neoxim.Platform.Api.Controllers.Externals.ExternalsController.#ctor(Neoxim.Platform.Core.Services.IDocumentService,Neoxim.Platform.Core.Infrastructure.IStorageService,Microsoft.Extensions.Caching.Memory.IMemoryCache,Neoxim.Platform.Infrastructure.Externals.Autodesk.APS)">
             <summary>
             Ctor.
@@ -79,37 +104,6 @@
             <param name="storageService"></param>
             <param name="memoryCache"></param>
             <param name="aps"></param>
-        </member>
-        <member name="T:Neoxim.Platform.Api.Controllers.Externals.AccessToken">
-            <summary>
-            Access Token
-            </summary>
-            <param name="access_token"></param>
-            <param name="expires_in"></param> <summary>
-            
-            </summary>
-            <param name="access_token"></param>
-            <param name="expires_in"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Neoxim.Platform.Api.Controllers.Externals.AccessToken.#ctor(System.String,System.Int64)">
-            <summary>
-            Access Token
-            </summary>
-            <param name="access_token"></param>
-            <param name="expires_in"></param> <summary>
-            
-            </summary>
-            <param name="access_token"></param>
-            <param name="expires_in"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Neoxim.Platform.Api.Controllers.Externals.AccessToken.access_token">
-            <summary></summary>
-            <summary></summary>
-        </member>
-        <member name="P:Neoxim.Platform.Api.Controllers.Externals.AccessToken.expires_in">
-            <summary></summary>    /// <summary></summary>
         </member>
         <member name="T:Neoxim.Platform.Api.Controllers.FoldersController">
             <summary>
@@ -275,6 +269,21 @@
             Create new user
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.UsersController.PatchAsync(System.Guid,Neoxim.Platform.Core.Models.UpdateUserModel)">
+            <summary>
+            Update user information
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Neoxim.Platform.Api.Controllers.UsersController.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a project
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:Neoxim.Platform.Api.Helpers.AuthClaimsTransformationHelper">

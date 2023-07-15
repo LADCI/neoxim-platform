@@ -54,4 +54,17 @@ namespace Neoxim.Platform.Core.Models
         public Guid TenantId { get; set; }
         public IEnumerable<Guid> Claims { get; set; }
     }
+
+    public class UpdateUserModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public GenderEnum Gender { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+
+        public Guid TenantId { get; set; }
+        public IEnumerable<Guid> Claims { get; set; }
+    }
 }

@@ -48,9 +48,35 @@ namespace Neoxim.Platform.Core.Services.Impl
             return new DocumentModel(document, document.Tenant.Id, document.Project.Id, document.Folder.Id);
         }
 
-        public async Task<IEnumerable<DocumentModel>> GetListByTenantAsync(Guid tenantId, bool asTree, CancellationToken cancellationToken)
+
+        public async Task<IEnumerable<DocumentModel>> GetListByTenantAsync(Guid tenantId, CancellationToken cancellationToken)
         {
             var documents = await _unitOfWork.DocumentsRepository.GetAllAsync(x => x.Tenant.Id == tenantId, 
+                includes: (query) => query
+                    .Include(x => x.Tenant)
+                    .Include(x => x.Project)
+                    .Include(x => x.Folder)
+                , default
+            );
+
+            return documents.Select(x => new DocumentModel(x, x.Tenant.Id, x.Project.Id, x.Folder.Id));
+        }
+        public async Task<IEnumerable<DocumentModel>> GetListByFolderAsync(Guid folderId, CancellationToken cancellationToken)
+        {
+            var documents = await _unitOfWork.DocumentsRepository.GetAllAsync(x => x.Folder.Id == folderId, 
+                includes: (query) => query
+                    .Include(x => x.Tenant)
+                    .Include(x => x.Project)
+                    .Include(x => x.Folder)
+                , default
+            );
+
+            return documents.Select(x => new DocumentModel(x, x.Tenant.Id, x.Project.Id, x.Folder.Id));
+        }
+
+        public async Task<IEnumerable<DocumentModel>> GetListByProjectAsync(Guid projectId, CancellationToken cancellationToken)
+        {
+            var documents = await _unitOfWork.DocumentsRepository.GetAllAsync(x => x.Project.Id == projectId, 
                 includes: (query) => query
                     .Include(x => x.Tenant)
                     .Include(x => x.Project)

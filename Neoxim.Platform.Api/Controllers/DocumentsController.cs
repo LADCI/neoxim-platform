@@ -1,26 +1,40 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Neoxim.Platform.Api.Constants;
+using Neoxim.Platform.Core.Enums;
 using Neoxim.Platform.Core.Infrastructure;
 using Neoxim.Platform.Core.Models;
 using Neoxim.Platform.Core.Services;
+using Neoxim.Platform.Infrastructure.Externals.Autodesk;
 
 namespace Neoxim.Platform.Api.Controllers
 {
+    public record DownloadDocumentModel(Guid DocumentId);
+
     /// <summary>
     /// Documents
     /// </summary>
     [ApiController]
     [Route("api/documents")]
-    public class DocumentsController : BaseApiController
+    public partial class DocumentsController : BaseApiController
     {
+        private readonly APS _aps;
         private readonly IDocumentService _documentService;
         private readonly IStorageService _storageService;
+        private readonly IMemoryCache _memoryCache;
+        private readonly int CACHE_EXPIRATION_DURATION = 24;
 
-        public DocumentsController(IDocumentService documentService, IStorageService storageService)
+        public DocumentsController(
+            IDocumentService documentService, 
+            IStorageService storageService,
+            IMemoryCache memoryCache, 
+            APS aps)
         {
             _documentService = documentService;
             _storageService = storageService;
+            _memoryCache = memoryCache;
+            _aps = aps; 
         }
 
 
@@ -41,22 +55,42 @@ namespace Neoxim.Platform.Api.Controllers
         /// Get documents by tenant
         /// </summary>
         /// <param name="tenantId"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("tenant/{tenantId}", Name = "GetDocumentsByTenantAsync")]
-        public async Task<IActionResult> GetDocumentsForTenantAsync(Guid tenantId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DocumentModel>))]
+        public async Task<IActionResult> GetDocumentsForTenantAsync(Guid tenantId, CancellationToken cancellationToken)
         {
-            return Ok();
+            var result = await _documentService.GetListByTenantAsync(tenantId, cancellationToken);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get documents by folder identifier
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("project/{projectId}", Name = "GetDocumentsByProjectAsync")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DocumentModel>))]
+        public async Task<IActionResult> GetDocumentsForProjectAsync(Guid projectId, CancellationToken cancellationToken)
+        {
+            var result = await _documentService.GetListByProjectAsync(projectId, cancellationToken);
+            return Ok(result);
         }
 
         /// <summary>
         /// Get documents by folder identifier
         /// </summary>
         /// <param name="folderId"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("folder/{folderId}", Name = "GetDocumentsByFolderAsync")]
-        public async Task<IActionResult> GetDocumentsForFolderAsync(Guid folderId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DocumentModel>))]
+        public async Task<IActionResult> GetDocumentsForFolderAsync(Guid folderId, CancellationToken cancellationToken)
         {
-            return Ok();
+            var result = await _documentService.GetListByFolderAsync(folderId, cancellationToken);
+            return Ok(result);
         }
 
         /// <summary>
@@ -81,6 +115,25 @@ namespace Neoxim.Platform.Api.Controllers
             await _documentService.SetUrlAsync(media.Id, url);
 
             return Ok(media);
+        }
+
+        /// <summary>
+        /// Download document for a given type
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("download/{documentType}")]
+        [ProducesResponseType(typeof(Externals.BucketObject), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DownloadDocumentAsync([FromRoute] DocumentTypeEnum documentType, [FromBody] DownloadDocumentModel model)
+        {
+            if(DocumentTypeEnum.IS_APS_MODELS.HasFlag(documentType))
+            {
+                return await DownloadBimDocumentAsync(model);
+            }
+            else
+            {
+                return await DownloadClassicDocumentAsync(model);
+            }
         }
 
         /// <summary>

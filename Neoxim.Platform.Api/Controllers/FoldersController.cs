@@ -72,5 +72,6 @@ namespace Neoxim.Platform.Api.Controllers
             var result = await _folderService.CreateAsync(model.Name, model.TenantId, model.ParentId);
             return Ok(result);
         }
+        
     }
 }

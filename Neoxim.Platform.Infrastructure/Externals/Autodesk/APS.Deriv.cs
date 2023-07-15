@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autodesk.Forge;
 using Autodesk.Forge.Model;
 
@@ -14,29 +10,21 @@ namespace Neoxim.Platform.Infrastructure.Externals.Autodesk
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes).TrimEnd('=');
+            return Convert.ToBase64String(plainTextBytes).TrimEnd('=');
         }
 
-        public async Task<Job> TranslateModel(string objectId, string rootFilename)
+        public async Task<Job> TranslateModel(string objectId)
         {
             var token = await GetInternalToken();
             var api = new DerivativesApi();
             api.Configuration.AccessToken = token.AccessToken;
             var formats = new List<JobPayloadItem> {
-                new JobPayloadItem (JobPayloadItem.TypeEnum.Svf2, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
-                //new JobPayloadItem (JobPayloadItem.TypeEnum.Dwg, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
-                //new JobPayloadItem (JobPayloadItem.TypeEnum.Thumbnail, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d }),
-                //new JobPayloadItem (JobPayloadItem.TypeEnum.Ifc, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._3d })
+                new JobPayloadItem (JobPayloadItem.TypeEnum.Svf2, new List<JobPayloadItem.ViewsEnum> { JobPayloadItem.ViewsEnum._2d, JobPayloadItem.ViewsEnum._3d })
             };
             var payload = new JobPayload(
                 new JobPayloadInput(Base64Encode(objectId)),
                 new JobPayloadOutput(formats)
             );
-            if (!string.IsNullOrEmpty(rootFilename))
-            {
-                payload.Input.RootFilename = rootFilename;
-                payload.Input.CompressedUrn = true;
-            }
             var job = (await api.TranslateAsync(payload)).ToObject<Job>();
             return job;
         }

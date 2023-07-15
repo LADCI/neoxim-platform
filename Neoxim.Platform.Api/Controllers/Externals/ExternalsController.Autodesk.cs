@@ -1,18 +1,19 @@
 using Autodesk.Forge.Client;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Neoxim.Platform.Infrastructure.Externals.Autodesk;
-using Neoxim.Platform.SharedKernel.Exceptions;
 
 namespace Neoxim.Platform.Api.Controllers.Externals
 {
+    public record AccessToken(string access_token, long expires_in);
+    public record BucketObject(string name, string urn);
+
     public partial class ExternalsController
     {
         /// <summary>
         /// APS - Get access token
         /// </summary>
         /// <returns></returns>
-        [HttpGet("autodesk-forge/auth/token")]
+        [HttpGet("aps/auth/token")]
         [ProducesResponseType(typeof(AccessToken), StatusCodes.Status200OK)]
         public async Task<IActionResult> AutodeskGetAccessTokenAsync()
         {
@@ -24,7 +25,7 @@ namespace Neoxim.Platform.Api.Controllers.Externals
         /// APS - Get models
         /// </summary>
         /// <returns></returns>
-        [HttpGet("autodesk-forge/models")]
+        [HttpGet("aps/models")]
         [ProducesResponseType(typeof(IEnumerable<BucketObject>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetModelsAsync()
         {
@@ -33,7 +34,12 @@ namespace Neoxim.Platform.Api.Controllers.Externals
             return Ok(result);
         }
 
-        [HttpGet("autodesk-forge/models/{urn}/status")]
+        /// <summary>
+        /// Get document translation status
+        /// </summary>
+        /// <param name="urn"></param>
+        /// <returns></returns>
+        [HttpGet("aps/models/{urn}/status")]
         [ProducesResponseType(typeof(TranslationStatus), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetModelStatus(string urn)
         {
@@ -51,60 +57,22 @@ namespace Neoxim.Platform.Api.Controllers.Externals
             }
         }
 
-        // [HttpPost("autodesk-forge/models/form")]
-        // [ProducesResponseType(typeof(BucketObject), StatusCodes.Status200OK)]
-        // public async Task<IActionResult> UploadAndTranslateModelAsync([FromForm] UploadModelForm form)
-        // {
-        //     using var stream = new MemoryStream();
-        //     await form.File.CopyToAsync(stream);
-        //     stream.Position = 0;
-        //     var obj = await _aps.UploadModel(form.File.FileName, stream);
-        //     var job = await _aps.TranslateModel(obj.ObjectId, form.Entrypoint);
-
-        //     return Ok(new BucketObject(obj.ObjectKey, job.Urn));
-        // }
-
         /// <summary>
-        /// Generate document bucket (urn) for visualization
+        /// Upload model - for test only
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="file"></param>
         /// <returns></returns> <summary>
-        [HttpPost("autodesk-forge/models/bucket-urn")]
+        [HttpPost("aps/models")]
         [ProducesResponseType(typeof(BucketObject), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GenerateBucketAsync([FromBody] LoadDocumentModel model)
+        public async Task<IActionResult> UploadAndTranslateModelAsync([FromForm] IFormFile file)
         {
-            try
-            {
-                var key = $"KEY_{model.documentId}";
-    
-                var (obj, job) = await _memoryCache.GetOrCreateAsync(key, 
-                    async (entry) => 
-                    {
-                        // Cache
-                        entry.AbsoluteExpiration = DateTimeOffset.UtcNow.AddHours(CACHE_EXPIRATION_DURATION);
-                            
-                        // Act 
-                        var document = await _documentService.GetAsync(model.documentId, default);
-                        var inputBytes = await _storageService.DownloadFileAsync(document.Url, default);
-    
-                        using var stream = new MemoryStream();            
-                        stream.Write(inputBytes, 0, inputBytes.Length);
-                            
-                        var name = $"{document.Id}.{document.Type}".ToLower();
-    
-                        var obj = await _aps.UploadModel(name, stream);
-                        var job = await _aps.TranslateModel(obj.ObjectId, null);
-    
-                        return (obj, job);      
-                    }
-                );
-    
-                return Ok(new BucketObject(obj.ObjectKey, job.Urn));
-            }
-            catch (ObjectNotFoundException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            using var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            stream.Position = 0;
+            var obj = await _aps.UploadModel(file.FileName, stream);
+            var job = await _aps.TranslateModel(obj.ObjectId);
+
+            return Ok(new BucketObject(obj.ObjectKey, job.Urn));
         }
     }
 }

@@ -85,5 +85,44 @@ namespace Neoxim.Platform.Api.Controllers
                 return BadRequest(ex.Error);
             }
         }
+
+        /// <summary>
+        /// Update user information
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}", Name = "PatchUserAsync")]
+        public async Task<IActionResult> PatchAsync(Guid id, [FromBody] UpdateUserModel model)
+        {
+            try
+            {
+                //var result = await _tenantService.GetAsync(id, cancellationToken);
+                return Ok();
+            }
+            catch(ObjectNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// Delete a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}", Name = "DeleteUserAsync")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            try
+            {
+                //var result = await _tenantService.GetAsync(id, cancellationToken);
+                return Ok();
+            }
+            catch(ObjectNotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
